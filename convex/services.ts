@@ -27,27 +27,35 @@ export const getServicesByCategory = query({
 
 // إضافة خدمة جديدة (للإدارة فقط)
 export const addService = mutation({
-  args: {
-    name: v.string(),
-    description: v.string(),
-    category: v.string(),
-    price: v.number(),
-    minQuantity: v.number(),
-    maxQuantity: v.number(),
-    deliveryTime: v.string(),
-    quality: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) throw new Error("غير مصرح");
+  dited /home/project/convex/services.ts
 
-    // التحقق من صلاحيات الإدارة
-    const userProfile = await ctx.db
-      .query("userProfiles")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .first();
 
-    if (!userProfile?.isAdmin) {
+Read convex/services.ts (lines 1 - 20)
+
+
+Read convex/services.ts (lines 30 - 50)
+
+   args: {
+     name: v.string(),
+     description: v.string(),
+     category: v.string(),
+     price: v.number(),
+     minQuantity: v.number(),
+     maxQuantity: v.number(),
+     deliveryTime: v.string(),
+     quality: v.string(),
+   },
+   handler: async (ctx, args) => {
+     const userId = await getAuthUserId(ctx);
+     if (!userId) throw new Error("غير مصرح");
+ 
+     // التحقق من صلاحيات الإدارة
+     const userProfile = await ctx.db
+       .query("userProfiles")
+       .withIndex("by_user", (q) => q.eq("userId", userId))
+       .first();
+ 
+     if (!userProfile?.isAdmin) {
       throw new Error("غير مصرح - مطلوب صلاحيات إدارة");
     }
 
